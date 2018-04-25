@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh" class="no-js"><head>
+    <meta charset="utf-8">
+    <title>Qianwen Xie - blog</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="keyword" content="Qianwen Xie (名)，NickName: Jing，1996，天蝎，文艺爱好者。 Reading Books / Reading Novels / Listening To Music. Music / Novels / Books / Eccentric / Postgraduate Entrance Exams / 完美主义 / 文艺爱好者 / 古风文艺 / 天蝎 / 密集恐惧症">
+    <meta name="description" content="Music / Novels / Books / Eccentric / Postgraduate Entrance Exams / 完美主义 / 文艺爱好者 / 古风文艺 / 天蝎 / 密集恐惧症">
+    <meta name="renderer" content="webkit">
+    <link rel="alternate" type="application/rss+xml" href="./feed.xml" title="Qianwen Xie - blog">
+    <link rel="shortcut icon" href="./statics/favicon.ico">
+    <link href="./statics/styles/simple_89cbcf212373a4585211.css?5ad796ec2dfb49db4421" rel="stylesheet">
+
+    <script src="./statics/scripts/myblog.js"></script>
+</head>
+
+<body class="body layout-body layout-body--index">
+
+<div class="layout-header">
+    
+    <div class="container">
+  <div class="header-bar clearfix">
+    <div class="header-bar__list header-bar__list--menu">
+      <div class="item item--logo">
+        <a href="./index.html">
+          <i class="fi fi-logo"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="header-bar__list header-bar__list--link">
+      <div class="item">
+        <a href="./about.html">about</a>
+      </div>
+      <!-- <div class="item">
+        <a href="/project.html">project</a>
+      </div> -->
+      <div class="item item--block item--book">
+        <a href="./book.html" alt="book" title="book"><i class="fi fi-book"></i></a>
+      </div>
+      <div class="item item--block item--movie">
+        <a href="./movie.html" alt="movie" title="movie"><i class="fi fi-movie"></i></a>
+      </div>
+      <!-- <div class="item item--block item--code">
+        <a href="./code.html" alt="tech" title="tech"><i class="fi fi-code"></i></a>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+    
+</div>
+
+<div class="layout-container">
+    
+  <div class="container">
+    <div class="entry-list">
+
+        <!-- <div class="entry-list__year">
+          <span>*</span><strong>2009</strong>
+        </div>
+        <ul class="entry-list__list">
+          
+            <li class="entry-list__item">
+              - <a href="/cut-out-cd.html" class="link">
+                <strong class="title">打口 CD</strong>
+              </a>
+            </li>
+          
+            <li class="entry-list__item">
+              - <a href="/negative-building.html" class="link">
+                <strong class="title">负建筑</strong>
+              </a>
+            </li>
+        </ul> -->
+
+        <!-- 在这里输出所有的标题 -->
+      
+      
+    </div>
+  </div>
+
+</div>
+
+<div class="layout-footer">
+    
+    <div class="container">
+  <div class="footer-bar clearfix">
+    <div class="footer-bar__copyright">
+      © 2005-2018 <a href="../index.html">Qianwen Xie</a>
+    </div>
+    <div class="footer-bar__logo">
+      <a href="./index.html">
+        <i class="fi fi-logo"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+    
+</div>
+
+<script src="https://hm.baidu.com/hm.js?63392a0ec51d4ad23453b82650af1329"></script>
+<script src="./statics/scripts/jquery.min.js"></script>
+<script>
+    if (!window.jQuery) {
+        const script = document.createElement('script');
+        script.src = "//cdn.bootcss.com/jquery/3.2.1/jquery.min.js";
+        document.body.appendChild(script);
+    }
+</script>
+
+
+<script type="text/javascript" src="./statics/scripts/simple_89cbcf212373a4585211.js?5ad796ec2dfb49db4421"></script>
+
+<script type="text/javascript">
+
+function onclick_title(idx){
+  //localStorage.contentId = idx;
+  //window.location.href = './content.html';
+  window.open("./content.html?idx="+idx,"_blank");
+
+}
+
+function test_xml(){
+  // if(IEVersion()!=-1){
+  //   window.location.href = './error.html';
+  // }
+  //var xmlDoc = checkXMLDocObj('./contentData.xml');//读取到xml文件中的数据
+
+
+  var array_length =0;
+
+  $.ajax({
+      url: './contentData.xml',
+      dataType: 'xml',
+      success: function (data) {
+
+       
+        var nodes = $(data).find('item');
+        var title_array={};
+        array_length = nodes.length;
+
+
+        for(var i=0;i<nodes.length;i++){
+          node_i = nodes[i];
+
+          //解析CDATA数据
+          var title_CDATA = node_i.getElementsByTagName('title')[0].childNodes[0].nodeValue;
+          var description_CDATA = node_i.getElementsByTagName('description')[0].childNodes[0].nodeValue;
+          var link = node_i.getElementsByTagName('link')[0].innerHTML;
+          var guid = node_i.getElementsByTagName('guid')[0].innerHTML;
+          var creator_CDATA = node_i.getElementsByTagName('creator')[0].childNodes[0].nodeValue;
+          var pubDate = node_i.getElementsByTagName('pubDate')[0].innerHTML;
+          var year = get_year(pubDate);
+
+          if(!title_array[year]){
+              title_array[year] = [[i,title_CDATA]];
+          }else{
+            var temp = title_array[year];
+            temp.push([i,title_CDATA]);
+            title_array[year] = temp;
+          }
+         
+        }
+        var keys1 = [];
+        for (var p in title_array){
+          if (title_array.hasOwnProperty(p)){
+              keys1.push(p);
+          }
+        }
+        //降序函数  
+        var desc = function(x,y)    
+        {    
+            if (x > y)      
+                return -1;  //返回一个小于0 的数即可  
+            else        
+                return 1;  //返回一个大于0 的数即可  
+        }
+        //升序函数  
+        var asc = function(x,y)    
+        {    
+            if (x > y)      
+                return 1;  //返回一个大于0 的数即可  
+            else            
+                return -1;  //返回一个小于0 的数即可  
+        }
+        keys1 = keys1.sort(desc);
+
+        var html_title = '';
+        for(var i=0;i<keys1.length;i++){
+            var p = keys1[i];
+            if (title_array.hasOwnProperty(p)){
+              //下面这个匿名函数是解决两个for循环的闭包问题，参考网址：https://www.cnblogs.com/ZinCode/p/5551907.html
+              html_title += function(p1,title_array1){    
+                      var idx_array  = title_array1[p1];
+                      var title_array = title_array1[p1];
+                      var html_title1='';
+                      html_title1 += '<div class="entry-list__year"><span>*</span><strong>'+p1+'</strong></div>';
+                      html_title1 +='<ul class="entry-list__list">';
+                      for(var j=0;j<idx_array.length;j++){
+                        var idx = idx_array[j][0];
+                        //alert(idx);
+                        var title = title_array[j][1];
+                        html_title1 +='<li class="entry-list__item">- <a href="" onclick="onclick_title('+idx+');return false;" target="_blank" class="link"><strong class="title">'+title+'</strong></a></li>';
+
+                      }
+                      html_title1 +='</ul>';
+
+                      return html_title1;                            
+                        }(p,title_array); 
+            }
+        }
+        $(".entry-list").html(html_title);
+
+       
+        // var html_title = '';
+
+        // for (var p in title_array) {
+        //   if (title_array.hasOwnProperty(p)){
+        //       //下面这个匿名函数是解决两个for循环的闭包问题，参考网址：https://www.cnblogs.com/ZinCode/p/5551907.html
+        //       html_title += function(p1,title_array1){    
+        //               var idx_array  = title_array1[p1];
+        //               var title_array = title_array1[p1];
+        //               var html_title1='';
+        //               html_title1 += '<div class="entry-list__year"><span>*</span><strong>'+p1+'</strong></div>';
+        //               html_title1 +='<ul class="entry-list__list">';
+        //               for(var j=0;j<idx_array.length;j++){
+        //                 var idx = idx_array[j][0];
+        //                 //alert(idx);
+        //                 var title = title_array[j][1];
+        //                 html_title1 +='<li class="entry-list__item">- <a href="" onclick="onclick_title('+idx+');return false;" target="_blank" class="link"><strong class="title">'+title+'</strong></a></li>';
+
+        //               }
+        //               html_title1 +='</ul>';
+
+        //               return html_title1;                            
+        //                 }(p,title_array); 
+        //       //keys1.push(p);
+        //   }
+              
+        // }
+        // $(".entry-list").html(html_title);
+
+      }
+  });
+
+
+
+  // $(document).ready(function () {
+  //       var nodes;
+  //       parser=new DOMParser();
+  //       xmlDoc=parser.parseFromString(xmlDoc,"text/xml");
+
+  //       nodes = xmlDoc.getElementsByTagName('item');
+  //       var title_array={};
+  //       array_length = nodes.length;
+
+  //       for(var i=0;i<nodes.length;i++){
+  //         node_i = nodes[i];
+  //         //解析CDATA数据
+  //         var title_CDATA = node_i.getElementsByTagName('title')[0].childNodes[0].nodeValue;
+  //         var description_CDATA = node_i.getElementsByTagName('description')[0].childNodes[0].nodeValue;
+  //         var link = node_i.getElementsByTagName('link')[0].innerHTML;
+  //         var guid = node_i.getElementsByTagName('guid')[0].innerHTML;
+  //         var creator_CDATA = node_i.getElementsByTagName('dc:creator')[0].childNodes[0].nodeValue;
+  //         var pubDate = node_i.getElementsByTagName('pubDate')[0].innerHTML;
+
+  //         var year = get_year(pubDate);
+
+  //         if(!title_array[year]){
+  //             title_array[year] = [[i,title_CDATA]];
+  //         }else{
+  //           var temp = title_array[year];
+  //           temp.push([i,title_CDATA]);
+  //           title_array[year] = temp;
+  //         }
+         
+  //       }
+
+  //       var keys1 = [];
+  //       var html_title = '';
+  //       console.log(title_array);
+
+  //       for (var p in title_array) {
+  //         if (title_array.hasOwnProperty(p)){
+  //             //下面这个匿名函数是解决两个for循环的闭包问题，参考网址：https://www.cnblogs.com/ZinCode/p/5551907.html
+  //             html_title += function(p1,title_array1){    
+  //                     var idx_array  = title_array1[p1];
+  //                     console.log(idx_array);
+                      
+  //                     var title_array = title_array1[p1];
+  //                     var html_title1='';
+  //                     html_title1 += '<div class="entry-list__year"><span>*</span><strong>'+p1+'</strong></div>';
+  //                     html_title1 +='<ul class="entry-list__list">';
+  //                     for(var j=0;j<idx_array.length;j++){
+  //                       var idx = idx_array[j][0];
+  //                       //alert(idx);
+  //                       var title = title_array[j][1];
+  //                       html_title1 +='<li class="entry-list__item">- <a href="" onclick="onclick_title('+idx+');return false;" target="_blank" class="link"><strong class="title">'+title+'</strong></a></li>';
+
+  //                     }
+  //                     html_title1 +='</ul>';
+
+  //                           return html_title1;                            
+  //                       }(p,title_array); 
+  //             //keys1.push(p);
+  //         }
+              
+  //       }
+  //       $(".entry-list").html(html_title);
+        
+
+  // });
+}
+test_xml();
+
+localStorage.contentId = -1;//加载完这个页面后，将浏览器存储的contentId赋值为-1，防止打开content.html
+</script>
+
+</body></html>
